@@ -27,6 +27,7 @@
     "@angular/common": "^20.2.0",
     "@angular/compiler": "^20.2.0",
     "@angular/core": "^20.2.0",
+    "@angular/fire": "^20.0.1",
     "@angular/forms": "^20.2.0",
     "@angular/material": "^20.2.10",
     "@angular/platform-browser": "^20.2.0",
@@ -34,6 +35,7 @@
     "@angular/router": "^20.2.0",
     "@angular/ssr": "^20.2.2",
     "express": "^5.1.0",
+    "firebase": "^11.10.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"
   },

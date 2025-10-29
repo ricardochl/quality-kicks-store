@@ -1,0 +1,46 @@
+<mat-card class="product-card" [routerLink]="['/products', product.id]">
+  <div class="image-container">
+    <img mat-card-image [src]="product.imageUrl" [alt]="product.name" />
+  </div>
+
+  <mat-card-content>
+    <div class="brand">{{ product.brand }}</div>
+    <h3 class="product-name">{{ product.name }}</h3>
+    <p class="description">{{ product.description }}</p>
+
+    <div class="product-details">
+      <div class="detail-item">
+        <mat-icon>straighten</mat-icon>
+        <span>Talla US {{ product.size }}</span>
+      </div>
+      <div class="detail-item">
+        <mat-icon>{{
+          product.gender === 'mujer' ? 'female' : product.gender === 'hombre' ? 'male' : 'wc'
+        }}</mat-icon>
+        <span>{{
+          product.gender === 'mujer' ? 'Mujer' : product.gender === 'hombre' ? 'Hombre' : 'Unisex'
+        }}</span>
+      </div>
+    </div>
+
+    <div
+      class="stock-indicator"
+      [class.low-stock]="product.stock < 5"
+      [class.out-of-stock]="product.stock === 0"
+    >
+      <mat-icon>inventory</mat-icon>
+      <span>{{ product.stock > 0 ? product.stock + ' disponibles' : 'Agotado' }}</span>
+    </div>
+
+    <div class="price-section">
+      <span class="price">L {{ product.price.toFixed(2) }}</span>
+    </div>
+  </mat-card-content>
+
+  <mat-card-actions>
+    <button mat-raised-button color="primary" (click)="addToCart($event)" class="add-to-cart-btn">
+      <mat-icon>add_shopping_cart</mat-icon>
+      Agregar
+    </button>
+  </mat-card-actions>
+</mat-card>

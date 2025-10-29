@@ -1,0 +1,119 @@
+<button mat-fab color="primary" class="chat-fab" (click)="toggleChat()">
+  <mat-icon>{{ isOpen() ? 'close' : 'chat' }}</mat-icon>
+</button>
+
+@if (isOpen()) {
+  <div class="chat-window">
+    <mat-card>
+      <mat-toolbar color="primary">
+        <mat-icon>support_agent</mat-icon>
+        <span>Asistente Virtual</span>
+        <span class="spacer"></span>
+        <button mat-icon-button (click)="clearHistory()" matTooltip="Limpiar historial">
+          <mat-icon>delete</mat-icon>
+        </button>
+        <button mat-icon-button (click)="toggleChat()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-toolbar>
+
+      <mat-card-content class="chat-content" #chatContent>
+        <div class="messages">
+          @for (message of messages(); track $index) {
+            <div class="message" [class.user]="message.sender === 'user'"
+                 [class.assistant]="message.sender === 'assistant'">
+              <div class="message-avatar">
+                <mat-icon>{{ message.sender === 'user' ? 'person' : 'smart_toy' }}</mat-icon>
+              </div>
+              <div class="message-content">
+                <div class="message-text">{{ message.text }}</div>
+
+                @if (message.products && message.products.length > 0) {
+                  <div class="product-cards">
+                    @for (product of message.products; track product.id) {
+                      <mat-card class="product-card" [routerLink]="['/products', product.id]">
+                        <div class="product-image">
+                          <img mat-card-image [src]="product.imageUrl" [alt]="product.name">
+                          @if (product.stock === 0) {
+                            <div class="out-of-stock-badge">Agotado</div>
+                          }
+                        </div>
+
+                        <mat-card-content class="product-info">
+                          <div class="product-brand">{{ product.brand }}</div>
+                          <div class="product-name">{{ product.name }}</div>
+
+                          <div class="product-details">
+                            <mat-chip-set>
+                              <mat-chip>
+                                <mat-icon>straighten</mat-icon>
+                                US {{ product.size }}
+                              </mat-chip>
+                              <mat-chip>
+                                <mat-icon>{{ product.gender === 'mujer' ? 'female' : product.gender === 'hombre' ? 'male' : 'wc' }}</mat-icon>
+                                {{ product.gender }}
+                              </mat-chip>
+                            </mat-chip-set>
+                          </div>
+
+                          <div class="product-price">L {{ product.price.toLocaleString('es-HN', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }}</div>
+                        </mat-card-content>
+
+                        <mat-card-actions>
+                          <button mat-raised-button
+                                  color="primary"
+                                  class="add-to-cart-btn"
+                                  [disabled]="product.stock === 0"
+                                  (click)="addProductToCart(product.id, $event)">
+                            <mat-icon>add_shopping_cart</mat-icon>
+                            Agregar
+                          </button>
+                        </mat-card-actions>
+                      </mat-card>
+                    }
+                  </div>
+                }
+
+                <div class="message-time">{{ formatTime(message.timestamp) }}</div>
+              </div>
+            </div>
+          }
+
+          @if (isThinking()) {
+            <div class="message assistant">
+              <div class="message-avatar">
+                <mat-icon>smart_toy</mat-icon>
+              </div>
+              <div class="message-content">
+                <div class="typing-indicator">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      </mat-card-content>
+
+      <mat-card-actions class="chat-input">
+        <div class="input-container">
+          <mat-form-field appearance="outline" class="message-input">
+            <input matInput
+                   [(ngModel)]="userInput"
+                   (keyup.enter)="sendMessage()"
+                   placeholder="Escribe tu mensaje...">
+            <button mat-icon-button
+                    matSuffix
+                    color="primary"
+                    (click)="sendMessage()"
+                    [disabled]="!userInput.trim() || isThinking()">
+              <mat-icon>send</mat-icon>
+            </button>
+          </mat-form-field>
+        </div>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+}
+

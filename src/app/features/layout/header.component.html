@@ -1,0 +1,27 @@
+<mat-toolbar color="primary" class="header">
+  <div class="header-content">
+    <div class="logo">
+      <a routerLink="/" class="logo-link">
+        <mat-icon class="logo-icon">shopping_bag</mat-icon>
+        <span class="logo-text">Quality Kicks</span>
+      </a>
+    </div>
+
+    <nav class="nav-links">
+      <a mat-button routerLink="/products" routerLinkActive="active">
+        <mat-icon>inventory_2</mat-icon>
+        Productos
+      </a>
+      <a mat-button routerLink="/cart" routerLinkActive="active">
+        <mat-icon [matBadge]="cartItemCount()" matBadgeColor="accent"
+                  [matBadgeHidden]="cartItemCount() === 0"
+                  aria-hidden="false"
+                  [attr.aria-label]="'Carrito de compras con ' + cartItemCount() + ' productos'">
+          shopping_cart
+        </mat-icon>
+        Carrito
+      </a>
+    </nav>
+  </div>
+</mat-toolbar>
+

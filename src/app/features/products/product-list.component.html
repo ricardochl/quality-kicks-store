@@ -1,0 +1,64 @@
+<div class="product-list-container">
+  <h1>Catálogo de Tenis</h1>
+
+  <div class="filters">
+    <mat-form-field appearance="outline">
+      <mat-label>Buscar</mat-label>
+      <input matInput
+             [(ngModel)]="searchQuery"
+             (ngModelChange)="applyFilters()"
+             placeholder="Busca por marca, modelo...">
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Marca</mat-label>
+      <mat-select [(ngModel)]="selectedBrand" (ngModelChange)="applyFilters()">
+        <mat-option value="">Todas</mat-option>
+        <mat-option value="Nike">Nike</mat-option>
+        <mat-option value="Adidas">Adidas</mat-option>
+        <mat-option value="On">On</mat-option>
+        <mat-option value="New Balance">New Balance</mat-option>
+        <mat-option value="Converse">Converse</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Talla (US)</mat-label>
+          <mat-select [(ngModel)]="selectedSize" (ngModelChange)="applyFilters()">
+            <mat-option [value]="null">Todas</mat-option>
+            <mat-option [value]="6">6</mat-option>
+            <mat-option [value]="7">7</mat-option>
+            <mat-option [value]="8">8</mat-option>
+            <mat-option [value]="9">9</mat-option>
+            <mat-option [value]="10">10</mat-option>
+            <mat-option [value]="11">11</mat-option>
+            <mat-option [value]="12">12</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+      <mat-form-field appearance="outline">
+          <mat-label>Género</mat-label>
+          <mat-select [(ngModel)]="selectedGender" (ngModelChange)="applyFilters()">
+            <mat-option value="">Todos</mat-option>
+            <mat-option value="hombre">Hombre</mat-option>
+            <mat-option value="mujer">Mujer</mat-option>
+            <mat-option value="unisex">Unisex</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+  @if (filteredProducts().length === 0) {
+    <div class="no-products">
+      <mat-icon>search_off</mat-icon>
+      <p>No se encontraron productos con esos criterios.</p>
+    </div>
+  } @else {
+    <div class="products-grid">
+      @for (product of filteredProducts(); track product.id) {
+        <app-product-card [product]="product"></app-product-card>
+      }
+    </div>
+  }
+</div>
+

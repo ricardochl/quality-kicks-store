@@ -1,0 +1,10 @@
+{
+  "hosting": {
+    "public": "dist/quality-kicks-store/browser",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}

@@ -1,0 +1,259 @@
+.chat-fab {
+  position: fixed;
+  bottom: clamp(16px, 3vw, 24px);
+  right: clamp(16px, 3vw, 24px);
+  z-index: 1000;
+}
+
+.chat-window {
+  position: fixed;
+  bottom: clamp(80px, 10vw, 90px);
+  right: clamp(8px, 3vw, 24px);
+  width: min(420px, calc(100vw - 24px));
+  max-height: 600px;
+  z-index: 999;
+  border-radius: var(--mat-sys-shape-corner-medium);
+  overflow: hidden;
+  box-shadow: var(--mat-elevation-3);
+
+  mat-card {
+    display: flex;
+    flex-direction: column;
+    height: 600px;
+    margin: 0;
+    padding: 0;
+
+    .product-card {
+      height: auto;
+    }
+  }
+
+  mat-toolbar mat-icon:first-child {
+    margin-right: 8px;
+  }
+
+  .spacer {
+    flex: 1;
+  }
+}
+
+.chat-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  background: var(--mat-sys-secondary-container);
+}
+
+.messages {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.message {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+
+  &.user {
+    flex-direction: row-reverse;
+
+    .message-content {
+      background: var(--mat-sys-secondary);
+      color: var(--mat-sys-on-secondary);
+      border: none;
+    }
+
+    .message-avatar {
+      background: var(--mat-sys-primary-container);
+      color: var(--mat-sys-on-primary-container);
+    }
+  }
+
+  &.assistant .message-avatar {
+    background: var(--mat-sys-surface-container-highest);
+    border: 2px solid var(--mat-sys-outline-variant);
+  }
+}
+
+.message-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  flex-shrink: 0;
+
+  mat-icon {
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.message-content {
+  max-width: 70%;
+  padding: 12px 16px;
+  border-radius: var(--mat-sys-shape-corner-large);
+  background: var(--mat-sys-surface);
+  color: var(--mat-sys-on-surface);
+  border: 1px solid var(--mat-sys-outline-variant);
+  box-shadow: var(--mat-elevation-1);
+}
+
+.message-time {
+  font-size: 11px;
+  color: var(--mat-sys-on-surface-variant);
+  margin-top: 4px;
+}
+
+.message.user .message-time {
+  color: var(--mat-sys-on-secondary);
+  opacity: 0.9;
+}
+
+.product-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.product-card {
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  flex: 1 1 200px;
+  min-width: 200px;
+  height: auto;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--mat-elevation-4);
+  }
+}
+
+.product-image {
+  position: relative;
+  height: 180px;
+  background: var(--mat-sys-surface-container);
+
+  img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+  }
+
+  .out-of-stock-badge {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    padding: 4px 10px;
+    border-radius: var(--mat-sys-shape-corner-small);
+    font-size: 11px;
+    font-weight: 600;
+    background: var(--mat-sys-error-container);
+    color: var(--mat-sys-on-error-container);
+  }
+}
+
+.product-info {
+  padding: 12px;
+}
+
+.product-brand {
+  font-size: 11px;
+  color: var(--mat-sys-primary);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.product-name {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 4px 0 8px;
+  color: var(--mat-sys-on-surface);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.product-details {
+  margin: 8px 0;
+
+  mat-chip {
+    font-size: 11px;
+    height: 28px;
+    color: var(--mat-sys-on-surface-variant);
+    background: var(--mat-sys-surface-container-highest);
+
+    mat-icon {
+      font-size: 14px;
+      width: 14px;
+      height: 14px;
+      margin-right: 4px;
+      color: var(--mat-sys-primary);
+    }
+  }
+}
+
+.product-price {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--mat-sys-tertiary);
+  margin: 8px 0;
+}
+
+.typing-indicator {
+  display: flex;
+  gap: 4px;
+  padding: 12px;
+
+  span {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--mat-sys-primary);
+    animation: bounce 1.4s infinite ease-in-out both;
+
+    &:nth-child(1) {
+      animation-delay: -0.32s;
+    }
+
+    &:nth-child(2) {
+      animation-delay: -0.16s;
+    }
+  }
+}
+
+@keyframes bounce {
+  0%, 80%, 100% {
+    transform: scale(0);
+  }
+  40% {
+    transform: scale(1);
+  }
+}
+
+.chat-input {
+  padding: 16px;
+  background: var(--mat-sys-surface);
+  border-top: 1px solid var(--mat-sys-outline-variant);
+}
+
+.input-container {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  width: 100%;
+
+  .message-input {
+    flex: 1 1 auto;
+  }
+}
+
+/* recording UI removed for demo */

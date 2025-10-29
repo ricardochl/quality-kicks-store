@@ -1,0 +1,109 @@
+@if (product(); as product) {
+  <div class="product-detail-container">
+    <div class="back-button-container">
+      <button mat-button (click)="goBack()">
+        <mat-icon>arrow_back</mat-icon>
+        Volver a productos
+      </button>
+    </div>
+
+    <div class="product-detail-content">
+      <!-- Product Image -->
+      <div class="product-image-section">
+        <div class="main-image">
+          <img [src]="product.imageUrl" [alt]="product.name">
+          @if (product.stock === 0) {
+            <div class="out-of-stock-overlay">
+              <span>AGOTADO</span>
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- Product Info -->
+      <div class="product-info-section">
+        <div class="product-brand">{{ product.brand }}</div>
+        <h1 class="product-title">{{ product.name }}</h1>
+
+        <div class="product-meta">
+          <mat-chip-set>
+            <mat-chip>
+              <mat-icon>straighten</mat-icon>
+              Talla US {{ product.size }}
+            </mat-chip>
+            <mat-chip>
+              <mat-icon>person</mat-icon>
+              {{ product.gender }}
+            </mat-chip>
+            @if (product.stock > 0) {
+              <mat-chip class="stock-chip">
+                <mat-icon>check_circle</mat-icon>
+                {{ product.stock }} disponibles
+              </mat-chip>
+            }
+          </mat-chip-set>
+        </div>
+
+        <div class="product-price">
+          <span class="price-label">Precio:</span>
+          <span class="price-value">L {{ product.price.toLocaleString('es-HN', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }}</span>
+        </div>
+
+        <div class="product-description">
+          <h3>Descripción</h3>
+          <p>{{ product.description }}</p>
+        </div>
+
+        @if (product.stock > 0) {
+          <div class="quantity-selector">
+            <label>Cantidad:</label>
+            <div class="quantity-controls">
+              <button mat-icon-button (click)="decreaseQuantity()" [disabled]="quantity() <= 1">
+                <mat-icon>remove</mat-icon>
+              </button>
+              <span class="quantity-value">{{ quantity() }}</span>
+              <button mat-icon-button (click)="increaseQuantity()" [disabled]="quantity() >= product.stock">
+                <mat-icon>add</mat-icon>
+              </button>
+            </div>
+          </div>
+
+          <div class="action-buttons">
+            <button mat-raised-button color="primary" class="add-to-cart-btn" (click)="addToCart()">
+              <mat-icon>add_shopping_cart</mat-icon>
+              Agregar al Carrito
+            </button>
+          </div>
+        } @else {
+          <div class="out-of-stock-message">
+            <mat-icon>error_outline</mat-icon>
+            <p>Lo sentimos, este producto está agotado temporalmente.</p>
+          </div>
+        }
+
+        <div class="product-features">
+          <h3>Características</h3>
+          <ul>
+            <li>
+              <mat-icon>verified</mat-icon>
+              Producto 100% original
+            </li>
+            <li>
+              <mat-icon>local_shipping</mat-icon>
+              Envío a todo Honduras
+            </li>
+            <li>
+              <mat-icon>autorenew</mat-icon>
+              Garantía de devolución
+            </li>
+            <li>
+              <mat-icon>payment</mat-icon>
+              Pago seguro
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+}
+
